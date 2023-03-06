@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "507422590804",
+    "project_id": "real-cc801",
+    "storage_bucket": "real-cc801.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507422590804:android:3f5afec0dc4e0358ecaac1",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507422590804-f55l6ngp4fscliv2ei73pvlq16hqc6st.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.login",
+            "certificate_hash": "ea1696b2fbc0a5ed85324ced81465311cae510b4"
+          }
+        },
+        {
+          "client_id": "507422590804-0r3ckfbg7aba6ek6rj22gttv4egb4vj7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKKjn_vf8-KOW24M46zgb1fF75sSvsR-o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507422590804-0r3ckfbg7aba6ek6rj22gttv4egb4vj7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

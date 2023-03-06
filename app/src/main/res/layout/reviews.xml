@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/reviewname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="mriganko babu"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="7dp"
+            android:text="Knock At The Cabin Is A Tense And Engaging Thriller\r\nWriter/Director M. Night Shyamalan is back with his new thriller “Knock at\r\nthe Cabin” and like his earlier works; the film blends reality with\r\nsupernatural elements to put ordinary people in circumstances that are\r\ndangerous and unnatural.\r\nThe film involves a same-sex couple named Eric (Jonathan Groff) and Andrew\r\n(Ben Aldridge), who have taken their adopted daughter Wen (Kristen Cui),\r\nto a secluded cabin for a relaxing vacation.\r\n\r\nThe arrival of four strangers lead by the imposing but soft-spoken Leonard\r\n(Dave Bautista) becomes dangerous when Leonard informs them that the world\r\nis about to end and only by choosing to sacrifice one of them can the\r\nApocalypse be diverted.\r\n\r\nLeonard explains that the "
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toBottomOf="@+id/reviewname"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/butterfly"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RatingBar
+            android:id="@+id/rate"
+            android:layout_width="166dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="6dp"
+            app:layout_constraintBottom_toTopOf="@+id/review"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reviewname"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
