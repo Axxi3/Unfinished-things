@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class DiscoverAdapter2(val context: Real_home?,val context2:MainActivity?,val MovieList: List<Movie.Result>): RecyclerView.Adapter<DiscoverAdapter2.ViewHolder2>() {
+class DiscoverAdapter2(val context: Real_home?,val context2:MainActivity2?,val MovieList: List<Movie.Result>): RecyclerView.Adapter<DiscoverAdapter2.ViewHolder2>() {
     private val colors= context?.resources?.getIntArray(R.array.mycolor)
     private val colors2= context2?.resources?.getIntArray(R.array.mycolor)
     private var pass: Int=0

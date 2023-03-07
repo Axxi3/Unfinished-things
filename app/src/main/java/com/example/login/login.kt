@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @Suppress("DEPRECATION")
@@ -30,12 +31,11 @@ private lateinit var auth :FirebaseAuth
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        com.example.login.databinding.ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_login)
         auth=FirebaseAuth.getInstance()
 
         if (auth.currentUser!=null) {
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this,MainActivity2::class.java)
             startActivity(intent)
         }
 
@@ -57,7 +57,7 @@ animation= findViewById(R.id.lottie)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        val intent = Intent(this,MainActivity::class.java)
+                        val intent = Intent(this,MainActivity2::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, "Please try agian", Toast.LENGTH_SHORT).show()

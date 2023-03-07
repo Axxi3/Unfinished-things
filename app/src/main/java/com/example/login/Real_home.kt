@@ -11,10 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.login.Tmdb.moviesIns
-import com.example.login.disco.moviesIns22
 import com.example.login.repo.PagingAdapter
 import com.example.login.repo.pagingViewModel
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.*
+import javax.inject.Singleton
 
 @AndroidEntryPoint
 class Real_home : Fragment() {
@@ -31,9 +35,8 @@ class Real_home : Fragment() {
     private lateinit var DiscoveryAdapter: DiscoverAdapter2
     private var pager: Int = 2
     private lateinit var  Adapter: PagingAdapter
-    private lateinit var pagingViewModel: pagingViewModel
+   // private  var pagingViewModel: pagingViewModel
     private  lateinit var discovery:RecyclerView
-   // private val viewModel: MovieViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -52,19 +55,25 @@ class Real_home : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getData()
         discovery=view.findViewById(R.id.Discovery)
-        Adapter= PagingAdapter(this)
-        pagingViewModel=ViewModelProvider(this).get(pagingViewModel::class.java)
-        discovery.layoutManager=LinearLayoutManager(activity)
-        discovery.setHasFixedSize(true)
-        discovery.adapter=Adapter
-        pagingViewModel.list.observe(this, androidx.lifecycle.Observer {
-            Adapter.submitData(lifecycle,it)
-        })
 
-        //discoverdata(pager)
+
+        discoverdata(pager)
 
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
+    private fun discoverdata(pager: Int) {
+        Adapter= PagingAdapter(this)
+        val pagingViewModel:pagingViewModel=ViewModelProvider(this).get(pagingViewModel::class.java)
+        discovery.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+        discovery.setHasFixedSize(true)
+        discovery.adapter=Adapter
+        pagingViewModel.list.observe(this@Real_home, androidx.lifecycle.Observer {
+            Adapter.submitData(lifecycle,it)
+
+        })
+
+    }
 
 
     @SuppressLint("SuspiciousIndentation")
@@ -116,31 +125,7 @@ class Real_home : Fragment() {
 
     }
 
-    @SuppressLint("SuspiciousIndentation")
-    private fun discoverdata(page: Int?) {
-val pass ="discover"
-        val Discover2 = moviesIns22.getMovies(page)
-        Discover2.enqueue(object : Callback<Movie> {
 
-            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
-                val tv = response.body()
-                Log.d("discover", "onResponse: " + response.toString())
-                if(tv!=null) {
-                val discy =view!!.findViewById<RecyclerView>(R.id.Discovery)
-                DiscoveryAdapter= DiscoverAdapter2(this@Real_home,null, tv.results!!)
-                    discy.adapter=DiscoveryAdapter
-                    discy.layoutManager= LinearLayoutManager(activity)
-                }
-
-
-            }
-
-            override fun onFailure(call: Call<Movie>, t: Throwable) {
-                Log.d("discover", "Somethingh went wrong " )
-            }
-        })
-
-    }
 }
 
 
@@ -166,13 +151,19 @@ interface discer2 {
    suspend fun getMovies(@Query("page") page: Int):Movie
 
 }
-object disco2{
-    val moviesIns222: discer2
-
-    init {
-        val retrofit = Retrofit.Builder().baseUrl(Base_url)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-        moviesIns222 = retrofit.create(discer2::class.java)
-
+@InstallIn(SingletonComponent::class)
+@Module
+class Network{
+    @Singleton
+    @Provides
+    fun getRetro() :Retrofit{
+        return Retrofit.Builder().baseUrl(Base_url).addConverterFactory(GsonConverterFactory.create()).build()
+    }
+    @Singleton
+    @Provides
+    fun getdiscy(retrofit: Retrofit):discer2{
+        return retrofit.create(discer2::class.java)
     }
 }
+
+

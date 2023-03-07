@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class Real_profile : Fragment() {
 lateinit var auth: FirebaseAuth
 lateinit var database: DatabaseReference

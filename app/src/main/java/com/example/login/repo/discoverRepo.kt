@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class discoverRepo @Inject constructor(val discer: discer2) {
     fun getDiscy() = Pager(
-        config = PagingConfig(pageSize = 499, maxSize = 100),
+        config = PagingConfig(pageSize = 10, maxSize = 30),
         pagingSourceFactory = {paging(discer)}
     ).liveData
 }

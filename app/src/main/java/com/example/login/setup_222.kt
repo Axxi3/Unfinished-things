@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.auth.User
+import dagger.hilt.android.AndroidEntryPoint
+
 
 class setup_222 : AppCompatActivity() {
     private lateinit var database: DatabaseReference
@@ -73,7 +75,7 @@ class setup_222 : AppCompatActivity() {
 
     private fun letsgo() {
         Toast.makeText(this, "Lets start your journey", Toast.LENGTH_SHORT).show()
-        val intent = Intent (this, MainActivity::class.java)
+        val intent = Intent (this, MainActivity2::class.java)
         startActivity (intent)
 
     }

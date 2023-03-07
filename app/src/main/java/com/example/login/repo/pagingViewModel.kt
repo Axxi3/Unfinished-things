@@ -8,5 +8,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class pagingViewModel @Inject constructor(val discoverRepo: discoverRepo):ViewModel() {
+
     val list =discoverRepo.getDiscy().cachedIn(viewModelScope)
 }

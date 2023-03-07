@@ -17,6 +17,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.login.getdata.datains
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +37,7 @@ const val MOVIE_ID= "movie_id"
 const val what_type="what_type"
 const val BASE_URL= "https://api.themoviedb.org/"
 const val AP_I = "b12e3fdf95940ab558f054895f4b79bb"
+@AndroidEntryPoint
 class show_Movies : AppCompatActivity() {
   private lateinit var id:String
    private lateinit var backdrop:ImageView

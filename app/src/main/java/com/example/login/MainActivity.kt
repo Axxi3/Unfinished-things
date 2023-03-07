@@ -19,8 +19,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
     private lateinit var discoverAdapter: DiscoverAdapter2
     private lateinit var searchRecycle2: RecyclerView
     private lateinit var cardView: CardView
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val home = Real_home()
         val profile = Real_profile()
-        var bot = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        val bot = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bot.setOnItemSelectedListener { item ->
             var fragment: Fragment? = null
             when (item.itemId) {
@@ -82,11 +83,11 @@ class MainActivity : AppCompatActivity() {
                         val searchyy = response?.body()
                         if (searchyy != null) {
                             discoverAdapter =
-                                DiscoverAdapter2(null, this@MainActivity, searchyy.results!!)
+                                DiscoverAdapter2(null, this@MainActivity2, searchyy.results!!)
                             searchRecycle2.adapter = discoverAdapter
                             val layouttManager =
                                 LinearLayoutManager(
-                                    this@MainActivity,
+                                    this@MainActivity2,
                                     LinearLayoutManager.VERTICAL,
                                     false
                                 )
@@ -133,6 +134,8 @@ class MainActivity : AppCompatActivity() {
         time = System.currentTimeMillis()
     }
 }
+
+
 
 
 
