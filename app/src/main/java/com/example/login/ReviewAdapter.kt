@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ReviewAdapter(val context:show_Movies,val reviewer:List<ResultX>):RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
+class ReviewAdapter(val context:show_Movies, val reviewer: List<reviewdata.Results>):RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.reviews,parent,false)

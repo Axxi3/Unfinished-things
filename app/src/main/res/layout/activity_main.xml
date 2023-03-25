@@ -8,6 +8,7 @@
     android:layout_gravity="bottom">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
+    android:id="@+id/main"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -47,25 +48,25 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="382dp"
-        android:layout_height="427dp"
+        android:id="@+id/shower"
+        android:layout_width="match_parent"
+        android:layout_height="610dp"
         android:layout_marginTop="3dp"
         android:visibility="gone"
-        android:id="@+id/shower"
+        android:backgroundTint="@color/realbghome"
         android:backgroundTintMode="add"
         android:hapticFeedbackEnabled="true"
-        android:backgroundTint="@color/realbghome"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Searcher" >
+        app:layout_constraintTop_toBottomOf="@+id/Searcher">
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchRecycle2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="3dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Searcher" />
+            android:visibility="gone" />
 
     </androidx.cardview.widget.CardView>
 

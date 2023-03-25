@@ -27,8 +27,11 @@ class castAdapter(val context:show_Movies, val castlist: List<cast>) : RecyclerV
         Glide.with(context).load("https://image.tmdb.org/t/p/w500"+realcast.profile_path).error(R.drawable.baseline_account_circle_24)
             .into(holder.profile_pic)
         holder.profile_name.text=realcast.original_name
-
     }
+
+
+
+
     class newViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
       val profile_pic= itemView.findViewById<CircleImageView>(R.id.profile_pic)
         val profile_name = itemView.findViewById<TextView>(R.id.profile_name)

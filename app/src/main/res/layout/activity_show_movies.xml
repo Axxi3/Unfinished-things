@@ -10,30 +10,7 @@
         android:layout_width="match_parent"  android:id="@+id/scrolly"
         android:layout_height="match_parent">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/space1"
-            android:layout_width="match_parent"
-            android:layout_height="145dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:layout_constraintVertical_bias="0.0"
-            app:lottie_rawRes="@raw/space" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/space2"
-            android:layout_width="match_parent"
-            android:layout_height="145dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Crew"
-            app:lottie_rawRes="@raw/space"
-            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/movie_backdrop"
@@ -195,16 +172,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="match_parent"
-            android:layout_height="185dp"
-            android:id="@+id/not"
-            app:layout_constraintBottom_toBottomOf="@+id/SimilarRecyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"
-            app:lottie_rawRes="@raw/space"
-            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/textView10"
@@ -217,12 +184,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/SimilarRecyle" />
-          <androidx.recyclerview.widget.RecyclerView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
-              android:id="@+id/reviewRecycle"
-              app:layout_constraintTop_toBottomOf="@id/textView10"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviewRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView10" />
 
 
 

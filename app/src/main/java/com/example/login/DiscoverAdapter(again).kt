@@ -19,7 +19,7 @@ class DiscoverAdapter2(val context: Real_home?,val context2:MainActivity2?,val M
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder2 {
         val inflate = LayoutInflater.from(parent.context)
         val view = inflate.inflate(R.layout.discover,parent,false)
-        return DiscoverAdapter2.ViewHolder2(view)
+        return ViewHolder2(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder2, position: Int) {
@@ -32,10 +32,9 @@ class DiscoverAdapter2(val context: Real_home?,val context2:MainActivity2?,val M
                 .into(holder.img)
 
             holder.name.text = discy!!.title
-            rater = discy.vote_average.toFloat()
-            holder.rate.rating = rater
-            holder.relese.text = discy.release_date
+
         }
+
         else{
             pass= colors?.get((colors?.indices)!!.random())!!
             holder.cardy.setBackgroundColor(pass!!)
@@ -50,6 +49,11 @@ class DiscoverAdapter2(val context: Real_home?,val context2:MainActivity2?,val M
 
                 holder.rate.rating = rater
             }
+        }
+        if(discy.vote_average!=null) {
+            rater = discy.vote_average.toFloat()
+            holder.rate.rating = rater
+            holder.relese.text = discy.release_date
         }
         holder.itemView.setOnClickListener{
             discover(discy,it, pass!!.toString())

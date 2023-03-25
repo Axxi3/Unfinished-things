@@ -14,7 +14,7 @@
             android:id="@+id/profile_pic"
             android:layout_width="159dp"
             android:layout_height="100dp"
-            android:src="@drawable/icon_hu"
+            android:src="@drawable/_62f9519fb7818e1274cb4f287e5c324"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

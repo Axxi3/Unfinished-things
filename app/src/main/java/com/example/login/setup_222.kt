@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.auth.User
-import dagger.hilt.android.AndroidEntryPoint
 
 
 class setup_222 : AppCompatActivity() {
@@ -42,7 +41,10 @@ class setup_222 : AppCompatActivity() {
         val user= FirebaseAuth.getInstance().currentUser
         done.setOnClickListener {
             if(name.length()>1) {
-                writeNewUser(user,name.text.toString())
+
+                writeNewUser(user, name.text.toString())
+
+
 
             }
             else {

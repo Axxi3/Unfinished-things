@@ -12,21 +12,31 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
-@AndroidEntryPoint
+
 class MainActivity2 : AppCompatActivity() {
     private lateinit var discoverAdapter: DiscoverAdapter2
     private lateinit var searchRecycle2: RecyclerView
     private lateinit var cardView: CardView
     private lateinit var searcher: SearchView
     private var time = 0L
+    private lateinit var main:FragmentContainerView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,13 +46,13 @@ class MainActivity2 : AppCompatActivity() {
         val profile = Real_profile()
         val bot = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bot.setOnItemSelectedListener { item ->
-            var fragment: Fragment? = null
             when (item.itemId) {
                 R.id.profile -> replace(profile)
                 R.id.manga -> toaster()
                 else -> replace(home)
             }
         }
+        main = findViewById(R.id.fragmentContainerView)
         searchRecycle2 = findViewById(R.id.searchRecycle2)
         cardView = findViewById(R.id.shower)
         searcher = findViewById(R.id.Searcher)
@@ -53,8 +63,23 @@ class MainActivity2 : AppCompatActivity() {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
+            override  fun onQueryTextChange(newText: String?): Boolean {
+                if(newText!=null) {
+
+            CoroutineScope(Dispatchers.IO).async{
                 filterList(newText)
+            }
+                 }
+                else {
+                    main.visibility=View.VISIBLE
+                    cardView.visibility = View.GONE
+                    searchRecycle2.visibility = View.GONE
+                    Handler().postDelayed({
+                        val inputMethodManager =
+                            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.hideSoftInputFromWindow(cardView.windowToken, 0)
+                    }, 300)
+                }
                 // cardView.visibility=View.GONE
                 return true
             }
@@ -70,11 +95,16 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     private fun filterList(query: String?) {
+        Log.d("search", "readdata: "+ Thread.currentThread().name)
         cardView.visibility = View.VISIBLE
+        var what:String="multi"
+
         searchRecycle2.visibility = View.VISIBLE
 
 
-        val search = getsearch.datains3.getSearch(query)
+
+        val search = getsearch.datains3.getSearch(what,query)
+
         search.enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                 Log.d("search", "onResponse: " + response)
@@ -136,6 +166,19 @@ class MainActivity2 : AppCompatActivity() {
 }
 
 
+interface search{
+    //https://api.themoviedb.org/3/search/movie?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&query=jungle
+    @GET("3/search/{multi}?api_key=$API&page=1&include_adult=false")
+    fun getSearch(@Path("multi")multi:String,@Query("query") query: String?):Call<Movie>
+}
+object getsearch{
+    val datains3:search
+    init {
+        val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        datains3 = retrofit.create(search::class.java)
+    }
+}
 
 
 

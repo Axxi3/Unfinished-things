@@ -2,10 +2,7 @@ package com.example.login
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -13,11 +10,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.login.getdata.datains
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.login.seeReview.reviewins
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +33,6 @@ const val MOVIE_ID= "movie_id"
 const val what_type="what_type"
 const val BASE_URL= "https://api.themoviedb.org/"
 const val AP_I = "b12e3fdf95940ab558f054895f4b79bb"
-@AndroidEntryPoint
 class show_Movies : AppCompatActivity() {
   private lateinit var id:String
    private lateinit var backdrop:ImageView
@@ -54,6 +49,7 @@ class show_Movies : AppCompatActivity() {
     private lateinit var recyle:RecyclerView
     private lateinit var  Lemmetry:RecyclerView
     private var page: Int = 0
+    private lateinit var reviewREcycle:RecyclerView
 
     @SuppressLint("MissingInflatedId", "CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +64,7 @@ class show_Movies : AppCompatActivity() {
         overview = findViewById(R.id.movie_overview)
         recyle = findViewById<RecyclerView>(R.id.recyclerView2)
         Lemmetry= findViewById(R.id.SimilarRecyle)
+        reviewREcycle=findViewById(R.id.reviewRecycle)
         val extras = intent.extras
 
         if (extras != null) {
@@ -105,17 +102,7 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
 
 
                 }
-                else{
 
-                    val space1=findViewById<LottieAnimationView>(R.id.space1)
-                   // space1.visibility=View.VISIBLE
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        space1.visibility=View.VISIBLE
-                        space1.playAnimation()
-                        space1.loop(true)
-                    }, 20)
-                    recyle.visibility=View.GONE
-                }
             }
 
             override fun onFailure(call: Call<Details2>, t: Throwable) {
@@ -138,16 +125,7 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
                Lemmetry.adapter=SimilarRecycle
                //    var layoutManager: Lemmetry.LayoutManager = LinearLayoutManager(context)
                Lemmetry.layoutManager= LinearLayoutManager(this@show_Movies,LinearLayoutManager.HORIZONTAL,false)}
-               else {
-                   val not=findViewById<LottieAnimationView>(R.id.not)
-                    Lemmetry.visibility=View.GONE
-                   Handler(Looper.getMainLooper()).postDelayed({
-                       not.visibility=View.VISIBLE
-                       not.playAnimation()
-                       not.loop(true)
 
-                   },10)
-               }
            }
 
            override fun onFailure(call: Call<Details2>, t: Throwable) {
@@ -155,27 +133,24 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
            }
        })
 
-page=1
+
+
         //for Reviews
-reviews(page)
+reviews()
 
     }
 
-
-private fun reviews(page:Int) {
-    val reviews = seeReview.reviewins.getReviews(what_type,id.toInt())
-    //reviewadapter vreation
-
+    private fun reviews() {
+        Toast.makeText(this, "reviews", Toast.LENGTH_SHORT).show()
+    val reviews = reviewins.getReviews(what_type,id.toInt())
     reviews.enqueue(object : Callback<reviewdata>{
-        @SuppressLint("SuspiciousIndentation")
         override fun onResponse(call: Call<reviewdata>, response: Response<reviewdata>) {
             val data= response.body()
                     if(data!=null){
                 Log.d("review", "onResponse: "+data.toString())
                 reviewAdapter= ReviewAdapter(this@show_Movies, data!!.results)
-                val reviewREcycle= findViewById<RecyclerView>(R.id.reviewRecycle)
                 reviewREcycle.adapter=reviewAdapter
-                reviewREcycle.layoutManager=LinearLayoutManager(applicationContext)}
+                reviewREcycle.layoutManager=LinearLayoutManager(this@show_Movies,LinearLayoutManager.HORIZONTAL,false)}
 
         }
 

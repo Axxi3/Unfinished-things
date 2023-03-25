@@ -10,12 +10,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
 class Real_profile : Fragment() {
 lateinit var auth: FirebaseAuth
@@ -37,7 +41,9 @@ lateinit var profilepic:ImageView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val auth = FirebaseAuth.getInstance()
-        readdata()
+        CoroutineScope(Dispatchers.IO).async{
+            readdata()
+        }
         profilepic=view.findViewById(R.id.Realpic)
         val helllo=  Glide.with(this).load("https://api.lorem.space/image/album?w=150&h=150").error(R.drawable.samurai)
             .into(profilepic)
@@ -51,21 +57,25 @@ lateinit var profilepic:ImageView
         }
     }
 
-    private fun readdata() {
+    private suspend fun readdata() {
+      withContext(Dispatchers.IO){
+          Log.d("bgthread", "readdata: "+ Thread.currentThread().name)
+         val later = FirebaseAuth.getInstance().currentUser?.uid.toString()
+         database= FirebaseDatabase.getInstance("https://real-cc801-default-rtdb.firebaseio.com/").getReference("User")
+         database.child(later).get().addOnSuccessListener {
+             name.text=it.child("uid").value.toString()
+             Log.d("profile", "readdata: " + it.child("uid").value.toString())
+         }.addOnFailureListener {
+             Log.d("profile", "readdata: Something Went Wrong")
+             // Toast.makeText(this@Real_profile, "Something Went Wrong", Toast.LENGTH_SHORT).show()
+         }
+     }
 
-        val later = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        database=FirebaseDatabase.getInstance("https://real-cc801-default-rtdb.firebaseio.com/").getReference("User")
-        database.child(later).get().addOnSuccessListener {
-            name.text=it.child("uid").value.toString()
-            Log.d("profile", "readdata: " + it.child("uid").value.toString())
-        }.addOnFailureListener {
-            Log.d("profile", "readdata: Something Went Wrong")
-           // Toast.makeText(this@Real_profile, "Something Went Wrong", Toast.LENGTH_SHORT).show()
-        }
     }
 
     @SuppressLint("SuspiciousIndentation")
     private fun logout() {
+        Toast.makeText(activity, "You won't be missed", Toast.LENGTH_SHORT).show()
      val intent:Intent = Intent(activity,login::class.java)
         startActivity(intent)
     }
