@@ -6,11 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.login.Tmdb.moviesIns
 import com.example.login.disco.moviesIns22
+import com.example.login.tmdbTrend.trendins
+import kotlinx.android.synthetic.main.fragment_real_home.*
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,6 +29,7 @@ import java.util.*
 
 class Real_home : Fragment() {
     private lateinit var adapter1: Adapter
+    private lateinit var adapter22:Adapter
     private lateinit var popularadapter: Adapter
     private var pager: Int = 2
     private lateinit var Adapter: DiscoverAdapter2
@@ -44,6 +49,53 @@ class Real_home : Fragment() {
 
     @SuppressLint("ResourceAsColor", "FragmentLiveDataObserve", "SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val options= listOf("week","day")
+        var select1="week"
+        var select2="movie"
+        val adapter = activity?.let {
+            ArrayAdapter(it, android.R.layout.simple_spinner_item, options)
+        }
+        adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter=adapter
+        spinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                select1 = options[position]
+                trending.text="Trending all $select1"
+                trend(select1,select2)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+ val options2= listOf("movie","tv")
+        val adapter2 = activity?.let {
+            ArrayAdapter(it, android.R.layout.simple_spinner_item, options2)
+        }
+        adapter2?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner2.adapter=adapter2
+        spinner2.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                select2=options2[position]
+                trend(select1,select2)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
         super.onViewCreated(view, savedInstanceState)
         val job = GlobalScope.launch(Dispatchers.IO) {
             getData()
@@ -55,6 +107,27 @@ class Real_home : Fragment() {
             discoverdata2(pager)
 
 
+    }
+
+    private fun trend(selectedOption: String, what: String) {
+            val trend=trendins.gettrend(what,selectedOption)
+        trend.enqueue(object :Callback<Movie> {
+            override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+                val movie66 = response.body()
+                    Log.d("hello", response.toString())
+                adapter1 = Adapter(this@Real_home, null, movie66!!.results!!, "movie")
+
+                val Lemmetry2 = view!!.findViewById<RecyclerView>(R.id.TrendingRecycle)
+                Lemmetry2.adapter = adapter1
+                //    var layoutManager: Lemmetry.LayoutManager = LinearLayoutManager(context)
+                Lemmetry2.layoutManager =
+                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            }
+
+            override fun onFailure(call: Call<Movie>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun discoverdata2(pager: Int) {

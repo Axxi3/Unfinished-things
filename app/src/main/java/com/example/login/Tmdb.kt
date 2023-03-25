@@ -29,3 +29,16 @@ object Tmdb {
 
     }
 }
+interface TmdbforTrend {
+    @GET("3/trending/{all}/{day}?api_key=$API")
+    fun gettrend(@Path("all")all:String,@Path("day")day:String):Call<Movie>
+
+}
+object tmdbTrend{
+    val trendins:TmdbforTrend
+    init {
+        val retrofit = Retrofit.Builder().baseUrl(Base_url)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        trendins= retrofit.create(TmdbforTrend::class.java)
+    }
+}
