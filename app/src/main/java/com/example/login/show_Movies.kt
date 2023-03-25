@@ -6,14 +6,12 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.login.getdata.datains
-import com.example.login.seeReview.reviewins
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -136,30 +134,11 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
 
 
         //for Reviews
-reviews()
+
 
     }
 
-    private fun reviews() {
-        Toast.makeText(this, "reviews", Toast.LENGTH_SHORT).show()
-    val reviews = reviewins.getReviews(what_type,id.toInt())
-    reviews.enqueue(object : Callback<reviewdata>{
-        override fun onResponse(call: Call<reviewdata>, response: Response<reviewdata>) {
-            val data= response.body()
-                    if(data!=null){
-                Log.d("review", "onResponse: "+data.toString())
-                reviewAdapter= ReviewAdapter(this@show_Movies, data!!.results)
-                reviewREcycle.adapter=reviewAdapter
-                reviewREcycle.layoutManager=LinearLayoutManager(this@show_Movies,LinearLayoutManager.HORIZONTAL,false)}
 
-        }
-
-        override fun onFailure(call: Call<reviewdata>, t: Throwable) {
-            Log.d("review", "Something went wrong")
-            Toast.makeText(this@show_Movies, "kuch nahi hua", Toast.LENGTH_SHORT).show()
-        }
-    })
-}
 
     private fun populateDetails(extras: Bundle) {
 
@@ -225,8 +204,8 @@ object getdiscover{
 
 interface review{
     //https://api.themoviedb.org/3/movie/631842/reviews?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&page=1
-    @GET("3/{movie}/{id}/reviews?api_key=$API")
-    fun getReviews(@Path("movie")movie:String,@Path("id") id:Int):Call<reviewdata>
+    @GET("3/{movie}/{id}/{what}?api_key=$API")
+    fun getReviews(@Path("movie")movie:String,@Path("id") id:Int,@Path("what")what:String):Call<reviewdata>
 }
 object seeReview{
     val reviewins:review

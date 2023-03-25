@@ -42,3 +42,16 @@ object tmdbTrend{
         trendins= retrofit.create(TmdbforTrend::class.java)
     }
 }
+interface castDetails{
+    //https://api.themoviedb.org/3/person/52fe49699251416c910ac665?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US
+    @GET("3/person/{id}?api_key=$API&language=en-US")
+    fun getCast(@Path("id")id:String):Call<castdetailsdata>
+}
+object hellocast{
+    val castins:castDetails
+    init {
+        val retrofit = Retrofit.Builder().baseUrl(Base_url)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        castins = retrofit.create(castDetails::class.java)
+    }
+}

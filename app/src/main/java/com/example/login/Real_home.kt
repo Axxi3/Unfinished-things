@@ -230,11 +230,7 @@ object disco {
 
     }
 }
-interface discer2 {
-    @GET("3/discover/movie?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US")
-   suspend fun getMovies(@Query("page") page: Int):Movie
 
-}
 
 
 

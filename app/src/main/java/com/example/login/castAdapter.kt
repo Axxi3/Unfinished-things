@@ -1,5 +1,6 @@
 package com.example.login
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,9 +28,17 @@ class castAdapter(val context:show_Movies, val castlist: List<cast>) : RecyclerV
         Glide.with(context).load("https://image.tmdb.org/t/p/w500"+realcast.profile_path).error(R.drawable.baseline_account_circle_24)
             .into(holder.profile_pic)
         holder.profile_name.text=realcast.original_name
+        holder.itemView.setOnClickListener {
+            castdetailscalled(realcast,it)
+        }
     }
 
-
+    private fun castdetailscalled(realcast: cast, it: View?) {
+           val intent=Intent(it!!.context,castShower::class.java).apply {
+               putExtra("cast_id",realcast.id)
+           }
+        it.context.startActivity(intent)
+    }
 
 
     class newViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
