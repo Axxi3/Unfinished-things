@@ -60,6 +60,11 @@ class MainActivity2 : AppCompatActivity() {
         searcher.queryHint = "Looking for something underrrated?"
         searcher.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                Handler().postDelayed({
+                    val inputMethodManager =
+                        getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(cardView.windowToken, 0)
+                }, 300)
                 return false
             }
 
@@ -99,14 +104,14 @@ class MainActivity2 : AppCompatActivity() {
         cardView.visibility = View.VISIBLE
         var what:String="multi"
 
-        searchRecycle2.visibility = View.VISIBLE
 
 
 
-        val search = getsearch.datains3.getSearch(what,query)
+        val search = getsearch.datains3.getSearch("search",what,query)
 
         search.enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+                searchRecycle2.visibility = View.VISIBLE
                 Log.d("search", "onResponse: " + response)
                 if (query != null) {
                     if (query.isNotEmpty()) {
@@ -169,8 +174,8 @@ class MainActivity2 : AppCompatActivity() {
 interface search{
     //https://api.themoviedb.org/3/search/movie?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&query=jungle
     //https://api.themoviedb.org/3/person/52fe49699251416c910ac665?api_key=b12e3fdf95940ab558f054895f4b79bb&page=1&include_adult=false
-    @GET("3/{search}/{multi}?api_key=$API&page=1&include_adult=false")
-    fun getSearch(@Path("multi")multi:String,@Query("query") query: String?):Call<Movie>
+    @GET("3/{search}/{multi}?api_key=$API&page=1&include_adult=true")
+    fun getSearch(@Path("search")search:String,@Path("multi")multi:String,@Query("query") query: String?):Call<Movie>
 }
 object getsearch{
     val datains3:search

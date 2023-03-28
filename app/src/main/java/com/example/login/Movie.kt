@@ -11,7 +11,9 @@ class Movie(
             val total_pages:Int,
             val total_results:Int) {
     data class Result(
+        var profile_path:String?,
         val id: String,
+        val name:String,
         val title: String,
         val poster_path: String,
         val popularity: String,

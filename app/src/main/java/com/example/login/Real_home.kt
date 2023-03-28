@@ -29,7 +29,7 @@ import java.util.*
 
 class Real_home : Fragment() {
     private lateinit var adapter1: Adapter
-    private lateinit var adapter22:Adapter
+
     private lateinit var popularadapter: Adapter
     private var pager: Int = 2
     private lateinit var Adapter: DiscoverAdapter2
@@ -112,6 +112,7 @@ class Real_home : Fragment() {
     private fun trend(selectedOption: String, what: String) {
             val trend=trendins.gettrend(what,selectedOption)
         trend.enqueue(object :Callback<Movie> {
+            @SuppressLint("SuspiciousIndentation")
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                 val movie66 = response.body()
                     Log.d("hello", response.toString())

@@ -20,18 +20,14 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
-@Suppress("DEPRECATION")
+
 class login : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googlesigning: GoogleSignInClient
     private lateinit var animation: LottieAnimationView
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

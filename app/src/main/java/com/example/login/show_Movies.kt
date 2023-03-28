@@ -3,6 +3,7 @@ package com.example.login
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -12,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.login.getdata.datains
+import com.example.login.repo.images
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import kotlinx.android.synthetic.main.activity_show_movies.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -62,7 +68,6 @@ class show_Movies : AppCompatActivity() {
         overview = findViewById(R.id.movie_overview)
         recyle = findViewById<RecyclerView>(R.id.recyclerView2)
         Lemmetry= findViewById(R.id.SimilarRecyle)
-        reviewREcycle=findViewById(R.id.reviewRecycle)
         val extras = intent.extras
 
         if (extras != null) {
@@ -82,7 +87,6 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
                 val  gotdetails = response.body()
                 if (gotdetails!=null) {
                     Log.d("yoyoyo", "onResponse: "+response.toString())
-                    val Stringbuild = StringBuilder()
 
                     //Setting the reponse to activity
                     Log.d("yoyoyo", "onResponse: "+response)
@@ -130,10 +134,18 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
                Log.d("Similar", "onFailure: Something went wrong")
            }
        })
-
-
-
-        //for Reviews
+       trailer.setOnClickListener {
+             movie_backdrop.visibility=View.GONE
+           youtube_player_view.visibility= View.VISIBLE
+           val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view);
+           lifecycle.addObserver(youTubePlayerView)
+           youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+               override fun onReady(youTubePlayer: YouTubePlayer) {
+                   val videoId = "XZ8daibM3AE"
+                   youTubePlayer.loadVideo(videoId, 0F)
+               }
+           })
+       }
 
 
     }
@@ -184,35 +196,17 @@ object getdata{
     }
 }
 
-
-
-
-
-interface Discover{
-    @GET("3/discover/movie?api_key=$AP_I&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&with_watch_monetization_types=free")
-    fun DiscoverDetails():Response<Movie>
-    //https://api.themoviedb.org/3/discover/movie?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=2&with_watch_monetization_types=free
-}
-object getdiscover{
-    val datains2:Discover
-    init {
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-        datains2 = retrofit.create(Discover::class.java)
-    }
-}
-
-interface review{
-    //https://api.themoviedb.org/3/movie/631842/reviews?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&page=1
-    @GET("3/{movie}/{id}/{what}?api_key=$API")
-    fun getReviews(@Path("movie")movie:String,@Path("id") id:Int,@Path("what")what:String):Call<reviewdata>
+interface review2{
+    //https://api.themoviedb.org/3/person/6384/images?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&page=1
+    @GET("3/person/{id}/images?api_key=$API")
+    fun getReviews( @Path("id") id: String):Call<images>
 }
 object seeReview{
-    val reviewins:review
+    val reviewins2:review2
     init {
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build()
-       reviewins = retrofit.create(review::class.java)
+       reviewins2 = retrofit.create(review2::class.java)
     }
 }
 

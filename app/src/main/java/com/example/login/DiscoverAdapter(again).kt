@@ -26,13 +26,26 @@ class DiscoverAdapter2(val context: Real_home?,val context2:MainActivity2?,val M
         val discy= MovieList[position]
         holder.setIsRecyclable(false)
         if (context2 != null && discy!=null) {
-            pass= colors2?.get((colors2?.indices)!!.random())!!
-            holder.cardy.setBackgroundColor(pass!!)
-            Glide.with(context2).load("https://image.tmdb.org/t/p/w500" + (discy!!.poster_path  ))
+
+            if (discy.profile_path == null) {
+            pass = colors2?.get((colors2.indices).random())!!
+            holder.cardy.setBackgroundColor(pass)
+            Glide.with(context2).load("https://image.tmdb.org/t/p/w500" + (discy.poster_path))
                 .into(holder.img)
 
-            holder.name.text = discy!!.title
+            holder.name.text = discy.title
+             }
 
+            //For character
+            else {
+                pass = colors2?.get((colors2.indices).random())!!
+                holder.cardy.setBackgroundColor(pass)
+                Glide.with(context2).load("https://image.tmdb.org/t/p/w500" + (discy.profile_path))
+                    .into(holder.img)
+
+                holder.name.text = discy.name
+
+            }
         }
 
         else{
@@ -55,9 +68,23 @@ class DiscoverAdapter2(val context: Real_home?,val context2:MainActivity2?,val M
             holder.rate.rating = rater
             holder.relese.text = discy.release_date
         }
-        holder.itemView.setOnClickListener{
-            discover(discy,it, pass!!.toString())
+        if(discy.profile_path==null) {
+            holder.itemView.setOnClickListener {
+                discover(discy, it, pass!!.toString())
+            }
         }
+        else {
+            holder.itemView.setOnClickListener {
+                castdetailscalled(discy,it)
+            }
+        }
+    }
+
+    private fun castdetailscalled(discy: Movie.Result, it: View?) {
+        val intent=Intent(it!!.context,castShower::class.java).apply {
+            putExtra("cast_id",discy.id)
+        }
+        it.context.startActivity(intent)
     }
 
     private fun discover(discy: Movie.Result, it: View?, toString: String) {

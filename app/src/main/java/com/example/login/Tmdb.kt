@@ -8,7 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 //https://api.themoviedb.org/3/movie/popular?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&page=1
-//https://api.themoviedb.org/3/trending/all/day?api_key=b12e3fdf95940ab558f054895f4b79bb
+//https://api.themoviedb.org/3/trending/all/day?api_key=b12e3fdf95940ab558f054895f4b79bb&append_to_response=videos
 const val Base_url = "https://api.themoviedb.org/"
 const val API = "b12e3fdf95940ab558f054895f4b79bb"
 

@@ -10,7 +10,6 @@ data class reviewdata(
 
     data class Results(
         val author: String,
-        val author_details: List<com.example.login.ResultX.AuthorDetails>,
         val content: String,
         val created_at: String,
         val id: String,

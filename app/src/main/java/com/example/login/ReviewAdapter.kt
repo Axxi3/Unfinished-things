@@ -3,7 +3,6 @@ package com.example.login
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -24,13 +23,12 @@ class ReviewAdapter(val context:show_Movies, val reviewer: List<reviewdata.Resul
     }
 
     override fun getItemCount(): Int {
-        return reviewer.size
+        return 3
     }
 
     class ViewHolder (itemView: View):RecyclerView.ViewHolder(itemView){
 var avatar=itemView.findViewById<CircleImageView>(R.id.avatar)
         var name= itemView.findViewById<TextView>(R.id.reviewname)
         var review= itemView.findViewById<TextView>(R.id.review)
-        var rate= itemView.findViewById<RatingBar>(R.id.rate)
     }
 }
