@@ -3,7 +3,6 @@ package com.example.login
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -14,9 +13,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.login.getdata.datains
 import com.example.login.repo.images
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import kotlinx.android.synthetic.main.activity_show_movies.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,7 +44,7 @@ class show_Movies : AppCompatActivity() {
     private lateinit var adapter2: castAdapter
     private lateinit var crewkaAdapter:crewAdapter
     private lateinit var SimilarRecycle:Adapter2
-    private lateinit var reviewAdapter: ReviewAdapter
+   private lateinit var VideoKEy:String
     private lateinit var movie:String
     private lateinit var recyle:RecyclerView
     private lateinit var  Lemmetry:RecyclerView
@@ -134,18 +130,7 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
                Log.d("Similar", "onFailure: Something went wrong")
            }
        })
-       trailer.setOnClickListener {
-             movie_backdrop.visibility=View.GONE
-           youtube_player_view.visibility= View.VISIBLE
-           val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view);
-           lifecycle.addObserver(youTubePlayerView)
-           youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-               override fun onReady(youTubePlayer: YouTubePlayer) {
-                   val videoId = "XZ8daibM3AE"
-                   youTubePlayer.loadVideo(videoId, 0F)
-               }
-           })
-       }
+
 
 
     }

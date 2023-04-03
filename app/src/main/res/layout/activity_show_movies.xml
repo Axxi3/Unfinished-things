@@ -1,15 +1,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scrolly"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <ImageView
@@ -21,18 +19,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/backdrop_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.048" />
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/youtube_player_view"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/unemployed"
-            app:layout_constraintBottom_toBottomOf="@+id/backdrop_guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.048" />
@@ -77,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
-            app:layout_constraintTop_toBottomOf="@+id/youtube_player_view" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_backdrop" />
 
         <TextView
             android:id="@+id/movie_release_date"
@@ -85,7 +71,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="12sp"
-
             app:layout_constraintStart_toStartOf="@+id/movie_title"
             app:layout_constraintTop_toBottomOf="@+id/movie_title" />
 
@@ -194,21 +179,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="123dp" />
-
-        <Button
-            android:id="@+id/trailer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="51dp"
-            android:text="Watch trailer"
-            app:layout_constraintBottom_toTopOf="@+id/backdrop_guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
-            app:layout_constraintTop_toBottomOf="@+id/movie_title"
-            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

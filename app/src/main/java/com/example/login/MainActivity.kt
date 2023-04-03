@@ -174,7 +174,7 @@ class MainActivity2 : AppCompatActivity() {
 interface search{
     //https://api.themoviedb.org/3/search/movie?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&query=jungle
     //https://api.themoviedb.org/3/person/52fe49699251416c910ac665?api_key=b12e3fdf95940ab558f054895f4b79bb&page=1&include_adult=false
-    @GET("3/{search}/{multi}?api_key=$API&page=1&include_adult=true")
+    @GET("3/{search}/{multi}?api_key=$API&page=1&include_adult=true&append_to_response=videos")
     fun getSearch(@Path("search")search:String,@Path("multi")multi:String,@Query("query") query: String?):Call<Movie>
 }
 object getsearch{

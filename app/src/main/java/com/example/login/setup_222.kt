@@ -44,8 +44,6 @@ class setup_222 : AppCompatActivity() {
 
                 writeNewUser(user, name.text.toString())
 
-
-
             }
             else {
                 Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show()
