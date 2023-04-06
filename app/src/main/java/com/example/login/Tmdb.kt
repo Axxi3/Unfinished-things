@@ -1,8 +1,6 @@
 package com.example.login
 
-import com.example.login.repo.ProfileData
-import com.example.login.repo.requestToken
-import com.example.login.repo.token
+import com.example.login.repo.*
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -131,5 +129,79 @@ object sessionobj2{
     init {
         val retrofit=Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         sessioninstance=retrofit.create(sessioninterface::class.java)
+    }
+}
+
+interface wishlistinterface{
+    //https://api.themoviedb.org/3/account/18591377/watchlist?api_key=b12e3fdf95940ab558f054895f4b79bb&session_id=a223b9aa1d49c0d5aecfa875c7e97b8ad9e9896f
+    @POST("3/account/{id}/watchlist?api_key=$API")
+    fun addToWishlist(@Path("id")id:String,@Query("session_id")session_id:String,@Body details:movieDetails):Call<com.example.login.repo.sessionid>
+    data class movieDetails(
+        @SerializedName("media_type")  val media_type:String,
+        @SerializedName("media_id")  val media_id:String,
+        @SerializedName("watchlist")  val watchlist:Boolean
+    )
+}
+object wishlistobj{
+    val wishins:wishlistinterface
+    init {
+         val retrofit=Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        wishins=retrofit.create(wishlistinterface::class.java)
+    }
+}
+interface accountsState{
+    //https://api.themoviedb.org/3/movie/76600/account_states?api_key=b12e3fdf95940ab558f054895f4b79bb&session_id=a223b9aa1d49c0d5aecfa875c7e97b8ad9e9896f
+    @GET("3/{movie}/{id}/account_states?api_key=$API")
+    fun accstate(@Path("movie")movie: String,@Path("id")id:String,@Query("session_id")session_id:String):Call<accstate>
+}
+object accobj{
+    val accins:accountsState
+    init {
+        val retrofit=Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        accins =retrofit.create(accountsState::class.java)
+    }
+}
+interface likeinterface{
+    //https://api.themoviedb.org/3/account/18591377/watchlist?api_key=b12e3fdf95940ab558f054895f4b79bb&session_id=a223b9aa1d49c0d5aecfa875c7e97b8ad9e9896f
+    @POST("3/account/{id}/watchlist?api_key=$API")
+    fun addToLikelist(@Path("id")id: String,@Query("session_id")session_id:String,@Body details:movieDetails):Call<com.example.login.repo.sessionid>
+    data class movieDetails(
+        @SerializedName("media_type")  val media_type:String,
+        @SerializedName("media_id")  val media_id:String,
+        @SerializedName("favorite")  val favorite:Boolean
+    )
+}
+object likeobj{
+    val likeins:likeinterface
+    init {
+        val retrofit=Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        likeins=retrofit.create(likeinterface::class.java)
+    }
+}
+
+interface seewishlist{
+    //https://api.themoviedb.org/3/account/18591377/watchlist/movies?api_key=b12e3fdf95940ab558f054895f4b79bb&language=en-US&session_id=a223b9aa1d49c0d5aecfa875c7e97b8ad9e9896f
+    @GET("3/account/{id}/watchlist/movies?api_key=$API")
+    fun getsee(@Path("id")id:String,@Query("session_id")session_id:String):Call<Movie>
+}
+
+object seeobj{
+    val seeins:seewishlist
+    init {
+        val retrofit=Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+       seeins=retrofit.create(seewishlist::class.java)
+    }
+}
+
+//854575d654ff4fa1aae72f9475d7532a
+interface news{
+    @GET("everything?q=movies&apiKey=854575d654ff4fa1aae72f9475d7532a")
+    fun getNews():Call<News>
+}
+object seeNews{
+    val newsins:news
+    init {
+        val retrofit=Retrofit.Builder().baseUrl("https://newsapi.org/v2/").addConverterFactory(GsonConverterFactory.create()).build()
+        newsins=retrofit.create(news::class.java)
     }
 }

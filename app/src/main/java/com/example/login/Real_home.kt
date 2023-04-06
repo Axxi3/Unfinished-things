@@ -116,7 +116,7 @@ class Real_home : Fragment() {
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                 val movie66 = response.body()
                     Log.d("hello", response.toString())
-                adapter1 = Adapter(this@Real_home, null, movie66!!.results!!, "movie")
+                adapter1 = Adapter(this@Real_home, null,null, movie66!!.results!!, "movie")
 
                 val Lemmetry2 = view!!.findViewById<RecyclerView>(R.id.TrendingRecycle)
                 Lemmetry2.adapter = adapter1
@@ -166,7 +166,7 @@ class Real_home : Fragment() {
                     val movie66 = response.body()
                     if (movie66 != null)
                         Log.d("hello", response.toString())
-                    adapter1 = Adapter(this@Real_home, null, movie66!!.results!!, "movie")
+                    adapter1 = Adapter(this@Real_home, null,null, movie66!!.results!!, "movie")
 
                     val Lemmetry = view!!.findViewById<RecyclerView>(R.id.Lemmetry)
                     Lemmetry.adapter = adapter1
@@ -191,7 +191,7 @@ class Real_home : Fragment() {
                     val tv = response.body()
                     if (tv != null) {
                         val tvRecycle = view!!.findViewById<RecyclerView>(R.id.populartv)
-                        popularadapter = Adapter(this@Real_home, null, tv!!.results!!, "tv")
+                        popularadapter = Adapter(this@Real_home, null, null,tv!!.results!!, "tv")
                         tvRecycle.adapter = popularadapter
                         tvRecycle.layoutManager =
                             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

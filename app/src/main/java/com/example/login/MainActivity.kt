@@ -44,11 +44,12 @@ class MainActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val home = Real_home()
         val profile = Real_profile()
+        val news=Real_news()
         val bot = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bot.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.profile -> replace(profile)
-                R.id.manga -> toaster()
+                R.id.manga -> replace(news)
                 else -> replace(home)
             }
         }
@@ -93,11 +94,6 @@ class MainActivity2 : AppCompatActivity() {
 
     }
 
-    private fun toaster(): Boolean {
-        Toast.makeText(this, "Comming Soon", Toast.LENGTH_SHORT).show()
-        return false
-
-    }
 
     private fun filterList(query: String?) {
         Log.d("search", "readdata: "+ Thread.currentThread().name)

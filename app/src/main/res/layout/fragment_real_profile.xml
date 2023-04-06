@@ -10,7 +10,6 @@
     android:layout_height="match_parent"
     tools:context=".Real_profile">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,25 +28,26 @@
             android:id="@+id/Realname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="72dp"
-            android:visibility="invisible"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="76dp"
             android:fontFamily="@font/mulish_light"
             android:text="Loading......."
             android:textSize="22sp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.064"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/Realpic"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:fontFamily="@font/oxygen_bold"
             android:text="Wishlist"
             android:textSize="30sp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Realpic" />
@@ -83,6 +83,7 @@
             android:layout_marginTop="20dp"
             android:ems="10"
             android:inputType="textPassword"
+            android:hint="Type password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username" />
@@ -94,10 +95,23 @@
             android:layout_marginTop="131dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:hint="Type your name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Realpic" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/GridRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            android:visibility="gone"
+            app:spanCount="3"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
 </RelativeLayout>

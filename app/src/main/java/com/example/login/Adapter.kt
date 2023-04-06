@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class Adapter(
-    val context: Real_home?, val context2: show_Movies?, val MovieList: List<Movie.Result>,
+    val context: Real_home?, val context2: show_Movies?,val context3:Real_profile?, val MovieList: List<Movie.Result>,
     val what:String) : RecyclerView.Adapter<Adapter.ViewHolder>() {
     var onItemClick:((show_Movies)->Unit)? = null
 
@@ -30,6 +30,9 @@ val realMovies= MovieList[position]
        // holder.des.text=realMovies.overview
         if (context!=null) {
             context?.let { Glide.with(it).load("https://image.tmdb.org/t/p/w500"+ realMovies.poster_path).into(holder.Pics) }
+        }
+        else if(context3!=null) {
+                    Glide.with(context3).load("https://image.tmdb.org/t/p/w500"+ realMovies.poster_path).into(holder.Pics)
         }
         else {
             context2?.let { Glide.with(it).load("https://image.tmdb.org/t/p/w500"+ realMovies.poster_path).into(holder.Pics) }

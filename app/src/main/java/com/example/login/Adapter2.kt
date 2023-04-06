@@ -25,9 +25,10 @@ class Adapter2(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val realMovies= MovieList[position]
 
-
-            context2?.let { Glide.with(it).load("https://image.tmdb.org/t/p/w500"+ realMovies.poster_path).into(holder.Pics) }
-
+if(context2!=null) {
+    Glide.with(context2).load("https://image.tmdb.org/t/p/w500" + realMovies.poster_path)
+        .into(holder.Pics)
+}
 
         // holder.pop.text=realMovies.popularity
         holder.itemView.setOnClickListener {

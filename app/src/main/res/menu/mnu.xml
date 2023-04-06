@@ -8,7 +8,7 @@
     <item android:title="Profile"
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_self_improvement_24"/>
-    <item android:title="Manga"
+    <item android:title="News"
         android:id="@+id/manga"
         android:icon="@drawable/baseline_menu_book_24" />
 </menu>

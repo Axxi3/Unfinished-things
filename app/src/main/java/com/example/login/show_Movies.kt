@@ -1,18 +1,24 @@
 package com.example.login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.example.login.accobj.accins
 import com.example.login.getdata.datains
+import com.example.login.repo.accstate
 import com.example.login.repo.images
+import com.example.login.repo.sessionid
+import com.example.login.wishlistobj.wishins
 import kotlinx.android.synthetic.main.activity_show_movies.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -62,8 +68,11 @@ class show_Movies : AppCompatActivity() {
         rating = findViewById(R.id.movie_rating)
         releaseDate = findViewById(R.id.movie_release_date)
         overview = findViewById(R.id.movie_overview)
-        recyle = findViewById<RecyclerView>(R.id.recyclerView2)
+        recyle = findViewById(R.id.recyclerView2)
         Lemmetry= findViewById(R.id.SimilarRecyle)
+        val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val myValue = sharedPreferences.getString("sessionId", null)
+        val accid=sharedPreferences.getString("id",null)
         val extras = intent.extras
 
         if (extras != null) {
@@ -74,6 +83,27 @@ class show_Movies : AppCompatActivity() {
         } else {
             finish()
         }
+        if(myValue!=null) {
+            val accins = accins.accstate(movie, id, myValue.toString())
+            accins.enqueue(object : Callback<accstate> {
+                override fun onResponse(call: Call<accstate>, response: Response<accstate>) {
+                    val data = response.body()
+                    if (data!!.watchlist) {
+                        wishlist.text = "Unlist"
+                    }
+                }
+
+                override fun onFailure(call: Call<accstate>, t: Throwable) {
+                    Log.d("wish", "onFailure: $t")
+                }
+            })
+
+
+        }
+
+
+
+
 val pass="credits"
 
         //For Credits
@@ -131,7 +161,54 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
            }
        })
 
+//Wishlist
+        wishlist.setOnClickListener {
+            Log.d("myvalue", "onCreate: $myValue")
+            if(myValue!=null && wishlist.text=="Wishlist") {
+                val wishins=wishins.addToWishlist(accid.toString(),myValue,wishlistinterface.movieDetails(movie,id,true))
+                wishins.enqueue(object :Callback<com.example.login.repo.sessionid>{
+                    override fun onResponse(call: Call<sessionid>, response: Response<sessionid>) {
+                        val data=response.body()
+                        if(data!!.success) {
+                            Toast.makeText(this@show_Movies, "Successfully added", Toast.LENGTH_SHORT).show()
+                            wishlist.text="Unlist"
+                        }
+                        else {
+                            Toast.makeText(this@show_Movies, "Something went Wrong", Toast.LENGTH_SHORT).show()
+                        }
+                    }
 
+                    override fun onFailure(call: Call<sessionid>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+            }
+            else if(myValue!=null && wishlist.text=="Unlist") {
+                val wishins=wishins.addToWishlist(accid.toString(),myValue,wishlistinterface.movieDetails(movie,id,false))
+                wishins.enqueue(object :Callback<com.example.login.repo.sessionid>{
+                    override fun onResponse(call: Call<sessionid>, response: Response<sessionid>) {
+                        val data=response.body()
+                        if(data!!.success) {
+                            Toast.makeText(this@show_Movies, "Successfully removed", Toast.LENGTH_SHORT).show()
+                            wishlist.text="Wishlist"
+                        }
+                        else {
+                            Toast.makeText(this@show_Movies, "Something went Wrong", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<sessionid>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+            }
+            else {
+                Toast.makeText(this@show_Movies, "Please login to add to Wishlist", Toast.LENGTH_SHORT).show()
+                Thread.sleep(5000L)
+                Toast.makeText(this@show_Movies, "Tumhari mummy", Toast.LENGTH_SHORT).show()
+            }
+
+        }
 
     }
 
