@@ -21,6 +21,7 @@ class Movie(
         val backdrop_path :String,
         val vote_average:String,
         val release_date:String,
+        val genre_ids:List<Int>
     ) :java.io.Serializable{
     }
 

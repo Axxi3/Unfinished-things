@@ -2,14 +2,19 @@ package com.example.login
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
@@ -28,20 +33,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-
-
 class MainActivity2 : AppCompatActivity() {
     private lateinit var discoverAdapter: DiscoverAdapter2
     private lateinit var searchRecycle2: RecyclerView
     private lateinit var cardView: CardView
-    private lateinit var searcher: SearchView
     private var time = 0L
+    private lateinit var searchView:SearchView
     private lateinit var main:FragmentContainerView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+       setSupportActionBar(toolbar)
+        setTitle("WatchersList")
         val home = Real_home()
         val profile = Real_profile()
         val news=Real_news()
@@ -56,7 +62,9 @@ class MainActivity2 : AppCompatActivity() {
         main = findViewById(R.id.fragmentContainerView)
         searchRecycle2 = findViewById(R.id.searchRecycle2)
         cardView = findViewById(R.id.shower)
-        searcher = findViewById(R.id.Searcher)
+        /*
+        searcher = findViewById(R.id.Searcher2)
+        searcher.setBackgroundColor(Color.TRANSPARENT)
         searcher.isIconifiedByDefault = false
         searcher.queryHint = "Looking for something underrrated?"
         searcher.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -90,7 +98,7 @@ class MainActivity2 : AppCompatActivity() {
                 return true
             }
         })
-
+*/
 
     }
 
@@ -153,6 +161,48 @@ class MainActivity2 : AppCompatActivity() {
             .commit()
         return true
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolmenu, menu)
+        if (menu != null) {
+            val manager=getSystemService(Context.SEARCH_SERVICE)as SearchManager
+            val search=menu.findItem(R.id.Searchbarhu)
+            val searchView =search.actionView as SearchView
+            searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    searchView.clearFocus()
+                    searchView.isIconified=true
+                    searchView.onActionViewCollapsed()
+                    Toast.makeText(this@MainActivity2, "You searched for: $query", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if(newText!=null) {
+                        CoroutineScope(Dispatchers.IO).async{
+                            filterList(newText)
+                        }
+                    }
+                    return true
+                }
+            })
+        }
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.Searchbarhu -> {
+                return true
+            }
+
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+
+
+
+
 
     override fun onBackPressed() {
         if (time + 2000 > System.currentTimeMillis()) {

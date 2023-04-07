@@ -18,7 +18,6 @@ interface Tmdb1 {
 
 }
 
-
 object Tmdb {
     val moviesIns: Tmdb1
 

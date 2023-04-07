@@ -54,7 +54,8 @@ class Real_profile : Fragment() {
         var sessionId = sharedPreferences?.getString("sessionId", null)
 
         if(sessionId==null) {
-
+            textView9.visibility=View.VISIBLE
+                    textView9.text="Signin with your tmdb account"
             Toast.makeText(
                 activity,
                 "Please login from tmdb id so that i can store your data",

@@ -45,7 +45,6 @@ class castShower : AppCompatActivity() {
                     carouselRecyclerview.apply {
                         set3DItem(true)
                         setAlpha(true)
-
                         setOrientation(HORIZONTAL)
                     }
             }
