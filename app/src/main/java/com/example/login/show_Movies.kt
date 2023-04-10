@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -14,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.login.accobj.accins
+import com.example.login.detailsobj.detailsins
 import com.example.login.getdata.datains
-import com.example.login.repo.accstate
-import com.example.login.repo.images
+import com.example.login.repo.*
 import com.example.login.repo.sessionid
 import com.example.login.wishlistobj.wishins
 import kotlinx.android.synthetic.main.activity_show_movies.*
@@ -39,11 +40,13 @@ const val MOVIE_ID= "movie_id"
 const val what_type="what_type"
 const val BASE_URL= "https://api.themoviedb.org/"
 const val AP_I = "b12e3fdf95940ab558f054895f4b79bb"
+const val genre_ids="genere"
 class show_Movies : AppCompatActivity() {
   private lateinit var id:String
    private lateinit var backdrop:ImageView
    private lateinit var poster:ImageView
     private lateinit var title:TextView
+    private lateinit var idAdapter: idAdapter
     private lateinit var releaseDate:TextView
     private lateinit var overview:TextView
     private lateinit var rating:RatingBar
@@ -77,7 +80,7 @@ class show_Movies : AppCompatActivity() {
 
         if (extras != null) {
             id= extras.getString(MOVIE_ID,"")
-            populateDetails(extras)
+            ///populateDetails(extras)
             movie=extras.getString(what_type,"")
 
         } else {
@@ -88,8 +91,10 @@ class show_Movies : AppCompatActivity() {
             accins.enqueue(object : Callback<accstate> {
                 override fun onResponse(call: Call<accstate>, response: Response<accstate>) {
                     val data = response.body()
-                    if (data!!.watchlist) {
-                        wishlist.text = "Unlist"
+                    if(data!=null) {
+                        if (data!!.watchlist) {
+                            wishlist.text = "Unlist"
+                        }
                     }
                 }
 
@@ -100,6 +105,61 @@ class show_Movies : AppCompatActivity() {
 
 
         }
+
+        if(movie=="movie") {
+              Season.visibility=View.GONE
+        }
+        
+        //for genere
+     val genereins=detailsins.getdetails(movie,id)
+     genereins.enqueue(object :Callback<detailsdata> {
+         override fun onResponse(call: Call<detailsdata>, response: Response<detailsdata>) {
+             val data=response.body()
+             Log.d("showdart", "onResponse: $response")
+             if (data != null) {
+                 Glide.with(this@show_Movies)
+                     .load("https://image.tmdb.org/t/p/w1280" + data.backdrop_path)
+                     .transform(CenterCrop()).error(R.drawable.unemployed)
+                     .into(backdrop)
+                 Glide.with(this@show_Movies)
+                     .load("https://image.tmdb.org/t/p/w342"+ data.poster_path)
+                     .transform(CenterCrop()).error(R.drawable.baseline_account_circle_24)
+                     .into(poster)
+                 if(data.title!=null) {
+                     title.text=data.title
+                 }  else if (data.name!==null) {
+                     title.text=data.name
+                 }
+
+                 else {
+                     title.text=data.original_title
+                 }
+                 rating.rating=data.vote_average.toFloat()/2
+                 releaseDate.text=data.release_date
+                 overview.text=data.overview
+                 idAdapter= idAdapter(this@show_Movies,data.genres)
+                 genererecycle.adapter=idAdapter
+                 genererecycle.layoutManager=LinearLayoutManager(this@show_Movies,LinearLayoutManager.HORIZONTAL,false)
+                 if(data.seasons!=null) {
+                      val seasonAdapter=SeasonRecycle(this@show_Movies,data.seasons)
+                     SeasonRecycle.adapter=seasonAdapter
+                     SeasonRecycle.layoutManager=LinearLayoutManager(this@show_Movies,LinearLayoutManager.HORIZONTAL,false)
+                 }
+
+
+
+             }
+
+         }
+
+         override fun onFailure(call: Call<detailsdata>, t: Throwable) {
+             Log.d("showdart", "onFailure: $t")
+         }
+     })
+
+
+
+
 
 
 

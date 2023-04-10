@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import de.hdodenhof.circleimageview.CircleImageView
+import com.mikhaellopez.circularimageview.CircularImageView
 
 class crewAdapter(val context: show_Movies,val CrewList:List<crew>):RecyclerView.Adapter<crewAdapter.nayaViewHolder>() {
 
@@ -28,7 +28,7 @@ class crewAdapter(val context: show_Movies,val CrewList:List<crew>):RecyclerView
     }
 
     class nayaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val profile_pic= itemView.findViewById<CircleImageView>(R.id.profile_pic)
+        val profile_pic= itemView.findViewById<CircularImageView>(R.id.profile_pic)
         val profile_name = itemView.findViewById<TextView>(R.id.profile_name)
     }
 }

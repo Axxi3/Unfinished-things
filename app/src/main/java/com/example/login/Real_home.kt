@@ -116,7 +116,8 @@ class Real_home : Fragment() {
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                 val movie66 = response.body()
                     Log.d("hello", response.toString())
-                adapter1 = Adapter(this@Real_home, null,null, movie66!!.results!!, "movie")
+                val pass=""
+                adapter1 = Adapter(this@Real_home, null,null, movie66!!.results!!, what)
 
                 val Lemmetry2 = view!!.findViewById<RecyclerView>(R.id.TrendingRecycle)
                 Lemmetry2.adapter = adapter1
@@ -160,7 +161,7 @@ class Real_home : Fragment() {
         val job = CoroutineScope(Dispatchers.IO).async {
             Log.d("bgthread2", "readdata: "+ Thread.currentThread().name)
             val pass: String = "movie"
-            val movies = moviesIns.getMovies(pass, 1)
+            val movies = moviesIns.getMovies(pass,"popular")
             movies.enqueue(object : Callback<Movie> {
                 override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                     val movie66 = response.body()
@@ -184,7 +185,7 @@ class Real_home : Fragment() {
             })
             val passtv: String = "tv"
 
-            val tv = moviesIns.getMovies(passtv, 1)
+            val tv = moviesIns.getMovies(passtv, "popular")
             tv.enqueue(object : Callback<Movie> {
                 override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                     Log.d("tv", "onResponse: " + response.toString())

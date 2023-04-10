@@ -12,9 +12,25 @@ import retrofit2.http.*
 const val Base_url = "https://api.themoviedb.org/"
 const val API = "b12e3fdf95940ab558f054895f4b79bb"
 
+interface moviedetails{
+    @GET("3/{movie}/{popular}?api_key=$API")
+    fun getdetails(@Path("movie")movie:String,@Path("popular")popular:String): Call<detailsdata>
+
+}
+
+object detailsobj {
+    val detailsins: moviedetails
+
+    init {
+        val retrofit = Retrofit.Builder().baseUrl(Base_url)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        detailsins = retrofit.create(moviedetails::class.java)
+
+    }
+}
 interface Tmdb1 {
-    @GET("3/{movie}/popular?api_key=$API")
-    fun getMovies(@Path("movie")movie:String,@Query("page") page: Int): Call<Movie>
+    @GET("3/{movie}/{popular}?api_key=$API")
+    fun getMovies(@Path("movie")movie:String,@Path("popular")popular:String): Call<Movie>
 
 }
 

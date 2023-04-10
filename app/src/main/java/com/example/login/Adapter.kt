@@ -67,6 +67,7 @@ val realMovies= MovieList[position]
        putExtra("extra_movie_rating",realMovies.vote_average.toFloat())
         putExtra("extra_movie_release_date",realMovies.release_date)
         putExtra("movie_id",realMovies.id)
+        putExtra("genere",realMovies.genre_ids)
     }
         it.context.startActivity(intent)
     }

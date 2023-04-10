@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 class Movie(
     @SerializedName("page")
     val page:Int,
-            @SerializedName("results")
+    @SerializedName("results")
             val results:List<Result>?,
     @SerializedName("total_page")
             val total_pages:Int,
-            val total_results:Int) {
+    val total_results:Int) {
     data class Result(
         var profile_path:String?,
         val id: String,
@@ -21,7 +21,7 @@ class Movie(
         val backdrop_path :String,
         val vote_average:String,
         val release_date:String,
-        val genre_ids:List<Int>
+        val genre_ids:Array<Int>
     ) :java.io.Serializable{
     }
 

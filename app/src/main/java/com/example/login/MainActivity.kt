@@ -105,7 +105,7 @@ class MainActivity2 : AppCompatActivity() {
 
     private fun filterList(query: String?) {
         Log.d("search", "readdata: "+ Thread.currentThread().name)
-        cardView.visibility = View.VISIBLE
+
         var what:String="multi"
 
 
@@ -115,6 +115,7 @@ class MainActivity2 : AppCompatActivity() {
 
         search.enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
+                cardView.visibility = View.VISIBLE
                 searchRecycle2.visibility = View.VISIBLE
                 Log.d("search", "onResponse: " + response)
                 if (query != null) {
@@ -173,7 +174,7 @@ class MainActivity2 : AppCompatActivity() {
                     searchView.clearFocus()
                     searchView.isIconified=true
                     searchView.onActionViewCollapsed()
-                    Toast.makeText(this@MainActivity2, "You searched for: $query", Toast.LENGTH_SHORT).show()
+                    filterList(query)
                     return true
                 }
 

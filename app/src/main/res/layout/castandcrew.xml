@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="180dp"
     android:layout_height="125dp"
+    app:cardBackgroundColor="#00FFFFFF"
     android:background="@drawable/design">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_pic"
             android:layout_width="202dp"
             android:layout_height="100dp"
+            app:civ_shadow_radius="3dp"
             android:src="@drawable/_62f9519fb7818e1274cb4f287e5c324"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +27,6 @@
             android:layout_height="wrap_content"
             android:text="hello"
             android:textAlignment="center"
-            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
