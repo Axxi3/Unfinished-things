@@ -26,8 +26,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/Searcher"
-        android:layout_above="@+id/bottomNavigation">
+        android:layout_above="@+id/bottomNavigation"
+        android:layout_below="@id/Searcher">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView"
