@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">login</string>
+    <string name="app_name">WatchersList</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="popular_this_week">POPULAR THIS WEEK</string>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -106,6 +107,7 @@ class Real_profile : Fragment() {
             username.visibility=View.GONE
             password.visibility=View.GONE
             login.visibility=View.GONE
+            textView11.visibility=View.GONE
             textView9.visibility=View.VISIBLE
             GridRecycle.visibility=View.VISIBLE
                    showdata(sessionId)
@@ -121,6 +123,13 @@ class Real_profile : Fragment() {
             logout()
 
         }
+
+
+
+        textView11.setOnClickListener {
+            val a:Intent= Intent(Intent.ACTION_VIEW,Uri.parse("https://www.themoviedb.org/signup"))
+                startActivity(a)
+        }
     }
 
     private fun showrecycle(id: String) {
@@ -131,7 +140,8 @@ class Real_profile : Fragment() {
                 val data=response.body()
                 if(data?.results!=null) {
                     Wishrecycler = Adapter(null,null,this@Real_profile, data.results,"movie")
-                    GridRecycle.adapter=Wishrecycler
+                    if(Wishrecycler!=null) GridRecycle.adapter=Wishrecycler
+
                     val layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
                     GridRecycle.layoutManager = layoutManager
                 }

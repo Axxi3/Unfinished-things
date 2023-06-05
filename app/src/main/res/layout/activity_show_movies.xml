@@ -188,32 +188,20 @@
 
         <Button
             android:id="@+id/wishlist"
-            android:layout_width="89dp"
-            android:layout_height="36dp"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="12dp"
             android:text="Wishlist"
             android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/movie_overview"
+            app:layout_constraintEnd_toEndOf="@+id/movie_title"
             app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
             app:layout_constraintTop_toBottomOf="@+id/movie_release_date"
             app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/like"
-            android:layout_width="89dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="12dp"
-            android:text="Trailer"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/movie_overview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/wishlist"
-            app:layout_constraintTop_toBottomOf="@+id/movie_release_date"
-            app:layout_constraintVertical_bias="0.0" />
+
 
         <TextView
             android:id="@+id/Season"

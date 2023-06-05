@@ -210,7 +210,7 @@ object seeobj{
 
 //854575d654ff4fa1aae72f9475d7532a
 interface news{
-    @GET("everything?q=movies&apiKey=854575d654ff4fa1aae72f9475d7532a")
+    @GET("everything?q=movies&apiKey=615fc0bd4ebd46a0a934461de08a1a46")
     fun getNews():Call<News>
 }
 object seeNews{

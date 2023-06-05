@@ -264,8 +264,7 @@ val Movie_details = datains.getdetails(movie,id.toInt(),pass )
             }
             else {
                 Toast.makeText(this@show_Movies, "Please login to add to Wishlist", Toast.LENGTH_SHORT).show()
-                Thread.sleep(5000L)
-                Toast.makeText(this@show_Movies, "Tumhari mummy", Toast.LENGTH_SHORT).show()
+
             }
 
         }
